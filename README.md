@@ -55,3 +55,22 @@ www  WEB部署目录（或者子目录）
 │  │    └─ ...          其他自定义模板主题
 
 ~~~
+## 用法
+创建构造器
+```php
+$g = new Generator();
+//定义数据表
+$table_name ='pay_order';
+// 查询数据接口信息
+$info =  $g->getTableInfo($table_name,'common');
+
+// 生成model
+$g->buildModel($info);
+// 生成controller
+$g->buildController($info);
+// 生成 vue list
+$g->buildVueList($info);
+// 生成 vue detail
+$g->buildVueDetail($info);
+//...
+```
