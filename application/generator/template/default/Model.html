@@ -1,0 +1,45 @@
+<-?php
+namespace app\{$data.module_name}\model;
+
+use JoinPhpCommon\utils\AdvancedQuery;
+use think\db\Query;
+use think\Model;
+
+class {$data.model_name} extends Model{
+    protected $table = "{$data.table_name}";
+
+    /**
+    * 查询详情
+    * @param $condition array 查询条件
+    * @return {$data.model_name}
+    */
+    public static function getDetail(array $condition): {$data.model_name}
+    {
+        return self::where($condition)->find();
+    }
+
+    /**
+    * 查询列表
+    * @param $condition array 条件
+    * @return array  数据
+    */
+    public static function getList(array $condition) : array{
+        //分页排序
+        $sort = $condition['sort'] ?? 'desc';
+        $order = $condition['order'] ?? '{$data.pk}';
+        $limit = $condition['limit'] ?? 20;
+        $page = $condition["page"]??1;
+
+        $query = new Query();
+        // 高级查询条件
+        AdvancedQuery::buildQuery($query,$condition);
+        // 基础查询条件（键值对）
+        AdvancedQuery::buildFilter($query,$condition);
+        // 查询分页
+        $list = self::where($query)
+        ->order($order, $sort)
+        ->paginate($limit,true,['type'=>$page]);
+
+        return array('items' => $list->items(), 'total' => $list->total());
+    }
+}
