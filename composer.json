@@ -1,7 +1,7 @@
 {
     "name": "join/tp-generator",
     "description": "thinkphp generator",
-    "type": "library",
+    "type": "tp-module",
     "require": {
         "php": ">=7.0",
         "topthink/framework": "5.1.*",
