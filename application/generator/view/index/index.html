@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.7/index.min.js"></script>
+    <link href="https://cdn.bootcdn.net/ajax/libs/element-ui/2.15.7/theme-chalk/index.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.24.0/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <el-row :gutter="20">
+            <el-col :span="14" :offset="5">
+                <h1>ThinkPhp Generator 代码生成</h1>
+                <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+                    <el-form-item label="数据表" prop="table_name">
+                        <el-select v-model="form.table_name" placeholder="请选择数据表" @change="getTableColumns">
+                            <el-option v-for="item in table_list" :value="item.table_name">{{item.table_name}}({{item.table_comment}})</el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item label="类描述" prop="table_desc">
+                        <el-input v-model="form.table_desc"></el-input>
+                    </el-form-item>
+                    <el-form-item label="字段" prop="columns">
+                        <el-transfer :titles="['全部字段', '操作字段']" :props="{key: 'field', label: 'field_desc' }" v-model="form.columns" :data="columns"></el-transfer>
+                    </el-form-item>
+                    <el-form-item label="操作">
+                        <el-checkbox-group v-model="form.actions" prop="actions">
+                            <el-checkbox label="add">用户可添加</el-checkbox>
+                            <el-checkbox label="edit">用户可编辑</el-checkbox>
+                            <el-checkbox label="delete">用户可删除</el-checkbox>
+                            <el-checkbox label="query">用户可查询</el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                    <el-form-item label="操作" prop="soft_delete">
+                        <el-checkbox v-model="form.soft_delete">使用软删除</el-checkbox>
+                    </el-form-item>
+                    <el-form-item label="模板" prop="template">
+                        <el-checkbox-group v-model="form.template">
+                            <el-checkbox label="Model">Model模板</el-checkbox>
+                            <el-checkbox label="Controller">Controller模板</el-checkbox>
+                            <el-checkbox label="Validator">Validator模板</el-checkbox>
+                            <el-checkbox label="VueList">VueList模板</el-checkbox>
+                            <el-checkbox label="VueDetail">VueDetail模板</el-checkbox>
+                            <el-checkbox label="VueEdit">VueEdit模板</el-checkbox>
+                            <el-checkbox label="VueApiJs">VueApiJs模板</el-checkbox>
+                        </el-checkbox-group>
+                    </el-form-item>
+                    {{form}}
+                    <el-form-item>
+                        <el-button type="primary" @click="onSubmit">立即创建</el-button>
+                    </el-form-item>
+                </el-form>
+            </el-col>
+        </el-row>
+    </div>
+</body>
+<script type="text/javascript">
+    new Vue({
+        el: "#app",
+        data(){
+            return{
+                name:'ddd',
+                table_list:[],
+                columns:[],
+                table_index:null,
+                form: {
+                    table_desc: '',
+                    table_name: '',
+                    soft_delete:false,
+                    actions: ['query','delete','edit','add'],
+                    template:[],
+                    columns:[]
+                },
+                rules:{
+                    'table_desc':[
+                        { required: true, message: '请输入类描述', trigger: 'blur' },
+                    ],
+                    'table_name':[
+                        { required: true, message: '请选择表', trigger: 'blur' },
+                    ],
+                    'actions':[
+                        { required: true, message: '请选择操作', trigger: 'blur' },
+                    ],
+                    'template':[
+                        { required: true, message: '请选择模板', trigger: 'blur' },
+                    ],
+                    'columns':[
+                        { required: true, message: '请选择字段', trigger: 'blur' },
+                    ]
+                }
+            }
+        },
+        created(){
+          this.getTableList();
+        },
+        methods:{
+           getTableList(){
+               axios.post('/generator/index/getTableList/',{}).then(res=>{
+                   this.table_list = res.data;
+               });
+           },
+            getTableColumns(table_name){
+               var table = this.table_list.find(r=>r.table_name==table_name);
+                if(table['table_comment']!=''&& this.form.table_desc==''){ this.form.table_desc = table['table_comment'] }
+                axios.post('/generator/index/getTableColumns/',{'table_name':table['table_name']}).then(res=>{
+                    this.columns = res.data;
+                });
+            },
+            onSubmit(){
+                this.$refs['form'].validate((valid) => {
+                    if (valid) {
+                        axios.post('/generator/index/create/',this.form).then(res=>{
+                            if(res.data.code=='20000'){
+                                this.$notify({ title: '成功', message: '生成完成', type: 'success' });
+                            }
+                            else {
+                                this.$notify({ title: '错误', message: '生成错误', type: 'warning' });
+                            }
+                        });
+                    }
+                });
+            }
+        }
+    });
+</script>
+</html>

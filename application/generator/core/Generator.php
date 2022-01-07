@@ -143,7 +143,8 @@ class Generator
     {
         return Db::name('information_schema.tables')
             ->where(['table_schema'=>$db_name,'table_type'=>'base table'])
-            ->column('table_name');
+            ->field('table_name,table_comment')
+            ->select();
     }
     // 表主键
     public function getPrimaryKey($table_name){
