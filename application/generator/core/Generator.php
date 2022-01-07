@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app\generator\controller;
+namespace app\generator\core;
 
 
 use JoinPhpCommon\utils\Text;

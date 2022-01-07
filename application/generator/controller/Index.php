@@ -6,6 +6,7 @@ namespace app\generator\controller;
 
 
 use app\common\model\Model_PayOrder;
+use app\generator\core\Generator;
 use think\Controller;
 use think\Db;
 use think\Exception;
