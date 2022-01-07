@@ -11,8 +11,8 @@
 <body>
     <div id="app">
         <el-row :gutter="20">
-            <el-col :span="14" :offset="5">
-                <h1>ThinkPhp Generator 代码生成</h1>
+            <el-col :span="14" :offset="5" v-loading="loading">
+                <h1>ThinkPhp Generator 代码生成{{loading}}</h1>
                 <el-form ref="form" :model="form" :rules="rules" label-width="80px">
                     <el-form-item label="数据表" prop="table_name">
                         <el-select v-model="form.table_name" placeholder="请选择数据表" @change="getTableColumns">
@@ -47,7 +47,6 @@
                             <el-checkbox label="VueApiJs">VueApiJs模板</el-checkbox>
                         </el-checkbox-group>
                     </el-form-item>
-                    {{form}}
                     <el-form-item>
                         <el-button type="primary" @click="onSubmit">立即创建</el-button>
                     </el-form-item>
@@ -61,10 +60,9 @@
         el: "#app",
         data(){
             return{
-                name:'ddd',
+                loading:false,
                 table_list:[],
                 columns:[],
-                table_index:null,
                 form: {
                     table_desc: '',
                     table_name: '',
@@ -97,9 +95,12 @@
         },
         methods:{
            getTableList(){
+               this.loading = true;
                axios.post('/generator/index/getTableList/',{}).then(res=>{
                    this.table_list = res.data;
-               });
+               }).finally(()=>{
+                   this.loading = false
+               })
            },
             getTableColumns(table_name){
                var table = this.table_list.find(r=>r.table_name==table_name);
@@ -111,6 +112,7 @@
             onSubmit(){
                 this.$refs['form'].validate((valid) => {
                     if (valid) {
+                        this.loading = true
                         axios.post('/generator/index/create/',this.form).then(res=>{
                             if(res.data.code=='20000'){
                                 this.$notify({ title: '成功', message: '生成完成', type: 'success' });
@@ -118,7 +120,9 @@
                             else {
                                 this.$notify({ title: '错误', message: '生成错误', type: 'warning' });
                             }
-                        });
+                        }).finally(()=>{
+                            this.loading = false
+                        })
                     }
                 });
             }

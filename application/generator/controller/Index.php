@@ -45,26 +45,20 @@ class Index extends Controller
         $table_name = $data['table_name'];
         try{
             $info =  $g->getTableInfo($table_name,'common');
-
             $info['table_desc'] = $data['table_desc'];
 
+            if(in_array("Model",$data['template'])){ $g->buildModel($info); }
+            if(in_array("Controller",$data['template'])){ $g->buildController($info); }
+            if(in_array("Validator",$data['template'])){ $g->buildValidate($info); }
+            if(in_array("VueList",$data['template'])){ $g->buildVueList($info); }
+            if(in_array("VueDetail",$data['template'])){ $g->buildVueDetail($info); }
+            if(in_array("VueEdit",$data['template'])){ $g->buildVueEdit($info); }
+            if(in_array("VueApiJs",$data['template'])){ $g->buildVueApiJs($info); }
 
-            vdump("---------------代码自动生成 开始--------------------------------------");
-            vdump("生成Model");
-            $g->buildModel($info);
-            vdump("生成Controller");
-            $g->buildController($info);
-            vdump("生成VueList");
-            $g->buildVueList($info);
-            vdump("生成VueDetail");
-            $g->buildVueDetail($info);
-            vdump("生成VueEdit");
-            $g->buildVueEdit($info);
-            vdump("生成VueApiJS");
-            $g->buildVueApiJs($info);
-            vdump("---------------代码自动生成 结束--------------------------------------");
+            return json(['code'=>20000,'message'=>'成功']);
+
         }catch (Exception $e) {
-            vdump($e->getMessage());
+            return json(['code'=>50000,'message'=>$e->getMessage()]);
         }
     }
 }
