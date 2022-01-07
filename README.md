@@ -16,9 +16,6 @@ ThinkPHP Generator 代码生成器
 + Vue 详情页生成
 + Vue 编辑页生成
 
-
-> ThinkPHP5的运行环境要求PHP5.6以上，兼容PHP8.0。
-
 ## 安装
 
 下载本项目 拷贝 application/generator模块目录到你的项目中

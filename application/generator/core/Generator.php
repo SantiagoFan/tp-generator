@@ -90,51 +90,9 @@ class Generator
     }
 
     /**
-     * vue 列表文件
-     * @param $data
-     * @param string $template_name
-     */
-    public function buildVueList($data, string $template_name ='default'){
-        // 模板
-        $template_path = '../template/'.$template_name.'/VueList';
-        $view = new View($template_path);
-        $view->assign('data',$data);
-        $content = $view->getContent();
-        // 写文件
-        $file_path = $this->buildFilePath($data,
-            'vue/'.$data['table_name'],
-            'list',
-            ".vue");
-        $content = $this->toPhpFile($content);
-        file_put_contents($file_path,$content);
-        return true;
-    }
-
-    /**
-     * vue 详情文件
-     * @param $data
-     * @param string $template_name
-     */
-    public function buildVueDetail($data, string $template_name ='default'){
-        // 模板
-        $template_path = '../template/'.$template_name.'/VueDetail';
-        $view = new View($template_path);
-        $view->assign('data',$data);
-        $content = $view->getContent();
-        // 写文件
-        $file_path = $this->buildFilePath($data,
-            'vue/'.$data['table_name'],
-            'detail',
-            ".vue");
-        $content = $this->toPhpFile($content);
-        file_put_contents($file_path,$content);
-        return true;
-    }
-
-    /**
      * @throws Exception
      */
-    private function buildFilePath($data, $folder_name,$file_name, $extended_name): string
+    protected function buildFilePath($data, $folder_name,$file_name, $extended_name): string
     {
         $app_path = Env::get('app_path');
         $folder_path =  $app_path.$data['module_name']."\\".$folder_name;
@@ -157,7 +115,7 @@ class Generator
     /**
      * 文件转php文件，去除特殊转义
      */
-    private function toPhpFile($str){
+    protected function toPhpFile($str){
         $str = str_replace("<-?php","<?php",$str);
         return $str;
     }

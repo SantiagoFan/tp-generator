@@ -1,34 +1,22 @@
 {
-    "name": "topthink/think",
-    "description": "the new thinkphp framework",
-    "type": "project",
-    "keywords": [
-        "framework",
-        "thinkphp",
-        "ORM"
-    ],
-    "homepage": "http://thinkphp.cn/",
-    "license": "Apache-2.0",
-    "authors": [
-        {
-            "name": "liu21st",
-            "email": "liu21st@gmail.com"
-        }
-    ],
+    "name": "join/tp-generator",
+    "description": "thinkphp generator",
+    "type": "library",
     "require": {
-        "php": ">=7.0",
-        "topthink/framework": "5.1.*",
+        "php": "7.0",
         "join/php-common": "1.3.0"
     },
+    "license": "MIT",
     "autoload": {
         "psr-4": {
-            "app\\": "application"
+            "Join\\TpGenerator\\": "application/generator/"
         }
     },
-    "extra": {
-        "think-path": "thinkphp"
-    },
-    "config": {
-        "preferred-install": "dist"
-    }
+    "authors": [
+        {
+            "name": "SanFan",
+            "email": "san_fan@qq.com"
+        }
+    ],
+    "minimum-stability": "dev"
 }
