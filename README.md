@@ -29,7 +29,7 @@ tp-generator\application\index\controller\Index.php
 ~~~
 http://localhost:8080/generator/index/index
 ~~~
-
+![ui 界面](https://gitee.com/san_fan/tp-generator/raw/main/public/static/ui.png)
 ## 目录结构
 
 初始的目录结构如下：
@@ -101,4 +101,3 @@ $g->buildVueList($info);
 $g->buildVueDetail($info);
 //...
 ```
-![ui 界面](http://baidu.com/pic/doge.png)
