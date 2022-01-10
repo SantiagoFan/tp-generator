@@ -20,14 +20,10 @@ ThinkPHP Generator 代码生成器
 
 下载本项目 拷贝 application/generator模块目录到你的项目中
 
-编写生成信息
+### 访问UI界面运行生成  
+本地可直接 运行 php think run后访问
 ~~~
-tp-generator\application\index\controller\Index.php
-~~~
-
-访问UI界面运行生成
-~~~
-http://localhost:8080/generator/index/index
+http://{你的域名}/generator/index/index
 ~~~
 ![ui 界面](https://gitee.com/san_fan/tp-generator/raw/main/public/static/ui.png)
 ## 目录结构
