@@ -20,17 +20,18 @@
 import commonEdit from '@/utils/commonEdit'
 import api from '@/api/{$data.table_name}'
 export default {
-        mixins: [commonEdit],
-        data() {
-            return {
-                api,
-                primary_key:'{$data.pk}'
-            }
-        },
-        mounted() {
-            this.fetchData()
+    mixins: [commonEdit],
+    data() {
+        return {
+            api,
+            primary_key:'{$data.pk}',
+            formData:{}
         }
+    },
+    mounted() {
+        this.fetchData()
     }
+}
 </script>
 
 <style lang="scss" scoped>

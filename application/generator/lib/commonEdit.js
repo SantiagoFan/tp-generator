@@ -6,6 +6,7 @@ export default {
     return {
       primary_key: 'id',
       editLoading: false, // 正在加载标志
+      rules:{},// 验证规则
       formData: {
       }
     }
@@ -22,15 +23,17 @@ export default {
         this.formData = res.data
       })
     },
+    createAfter(){},
     // 提交添加
     createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
-          this.api.saveData(this.formData).then(() => {
+          this.api.saveData(this.formData).then(res => {
             this.$notify({ title: '成功', message: '创建成功', type: 'success', duration: 2000 })
+            this.createAfter(res)
           })
         }
       })
-    },
+    }
   }
 }
