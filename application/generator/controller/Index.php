@@ -46,6 +46,7 @@ class Index extends Controller
         try{
             $info =  $g->getTableInfo($table_name,'common');
             $info['table_desc'] = $data['table_desc'];
+            $info['soft_delete'] = $data['soft_delete'];
 
             if(in_array("Model",$data['template'])){ $g->buildModel($info); }
             if(in_array("Controller",$data['template'])){ $g->buildController($info); }

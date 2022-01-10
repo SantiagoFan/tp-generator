@@ -1,27 +1,24 @@
-<-?php
-namespace app\{$data.module_name}\model;
+<?php
+namespace app\common\model;
 
 use JoinPhpCommon\utils\AdvancedQuery;
 use think\db\Query;
 use think\Model;
 
 /**
-* {$data.table_desc}
-
-* Class {$data.model_name}
-
-* @package app\{$data.module_name}\model
+* 订单
+* Class Model_PayOrder
+* @package app\common\model
 */
-class {$data.model_name} extends Model{
-    protected $table = "{$data.table_name}";
+class Model_PayOrder extends Model{
+    protected $table = "pay_order";
 
     /**
     * 保存数据
     * @param $data array 数据
-    * @return {$data.model_name} model
+    * @return Model_PayOrder model
     */
-    public static function createModel(array $data): {$data.model_name}
-    {
+    public static function createModel(array $data): Model_PayOrder    {
         // 设置默认数据
         $model = User::create($data);
         return $model;
@@ -29,21 +26,19 @@ class {$data.model_name} extends Model{
     /**
     * 更新数据
     * @param $data array 数据
-    * @return {$data.model_name} model
+    * @return Model_PayOrder model
     */
-    public static function updateModel(array $data): {$data.model_name}
-    {
+    public static function updateModel(array $data): Model_PayOrder    {
         $model =  new self();
-        $model->allowField(true)->save($data,['{$data.pk}'=>$data['{$data.pk}']]);
+        $model->allowField(true)->save($data,['id'=>$data['id']]);
         return $model;
     }
     /**
     * 查询详情
     * @param $condition array 查询条件
-    * @return {$data.model_name} model
+    * @return Model_PayOrder model
     */
-    public static function getDetail(array $condition): {$data.model_name}
-    {
+    public static function getDetail(array $condition): Model_PayOrder    {
         return self::where($condition)->find();
     }
 
@@ -55,7 +50,7 @@ class {$data.model_name} extends Model{
     public static function getList(array $condition) : array{
         //分页排序
         $sort = $condition['sort'] ?? 'desc';
-        $order = $condition['order'] ?? '{$data.pk}';
+        $order = $condition['order'] ?? 'id';
         $limit = $condition['limit'] ?? 20;
         $page = $condition["page"]??1;
 
@@ -86,7 +81,7 @@ class {$data.model_name} extends Model{
             return true;
         }else{
             // 物理删除
-            return self::where('{$data.pk}','in',$ids)->delete();
+            return self::where('id','in',$ids)->delete();
         }
     }
 }

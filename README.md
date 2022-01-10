@@ -25,7 +25,7 @@ ThinkPHP Generator 代码生成器
 tp-generator\application\index\controller\Index.php
 ~~~
 
-访问调用运行生成
+访问UI界面运行生成
 ~~~
 http://localhost:8080/generator/index/index
 ~~~
@@ -52,6 +52,36 @@ www  WEB部署目录（或者子目录）
 │  │    └─ ...          其他自定义模板主题
 
 ~~~
+### 内置页面绑定参数（data）
+```json
+{
+    "module_name": "common",
+    "table_name": "pay_order",
+    "class_name": "PayOrder",
+    "pk": "id",
+    "model_name": "Model_PayOrder",
+    "controller_name": "PayOrder",
+    "table_desc": "支付订单",
+    "soft_delete": false,
+    "columns": [
+        {
+            "field": "id",
+            "data_type": "varchar",
+            "col_key": "PRI",
+            "comment": "支付记录表",
+            "field_desc": "支付记录表"
+        },
+        {
+            "field": "title",
+            "data_type": "varchar",
+            "col_key": "",
+            "comment": "支付项目名称",
+            "field_desc": "支付项目名称"
+        },
+    ]
+
+}
+```
 ## 用法
 创建构造器
 ```php

@@ -1,19 +1,18 @@
-<-?php
+<?php
 
 
-namespace app\{$data.module_name}\controller;
+namespace app\common\controller;
 
-use app\common\model\{$data.model_name};
+use app\common\model\Model_PayOrder;
 use think\response\Json;
 use think\facade\Request;
 
 /**
-* {$data.table_desc} 控制器
-* Class {$data.controller_name}
-
-* @package app\{$data.module_name}\controller
+* 订单 控制器
+* Class PayOrder
+* @package app\common\controller
 */
-class {$data.controller_name} extends Controller
+class PayOrder extends Controller
 {
 
     /**
@@ -24,10 +23,10 @@ class {$data.controller_name} extends Controller
     {
         try {
             $param = Request::param('post.');
-            if(isset($param['{$data.pk}'])){
-                {$data.model_name}::updateModel($param);
+            if(isset($param['id'])){
+                Model_PayOrder::updateModel($param);
             }else{
-                {$data.model_name}::createModel($param);
+                Model_PayOrder::createModel($param);
             }
         }catch (\Exception $e){
             return json(['code'=>50000,'message'=>$e->getMessage()]);
@@ -40,8 +39,8 @@ class {$data.controller_name} extends Controller
     public function getDetail(): Json
     {
         try{
-            $data =  Request::param('{$data.pk}');
-            $result  =  {$data.model_name}::getDetail($data);
+            $data =  Request::param('id');
+            $result  =  Model_PayOrder::getDetail($data);
             return json(['code' => 20000, 'data' => $result,'message'=>'查询成功']);
         }catch (\Exception $e){
             return json(['code'=>50000,'message'=>$e->getMessage()]);
@@ -56,7 +55,7 @@ class {$data.controller_name} extends Controller
     {
         try {
             $param = Request::param('post.');
-            $data = {$data.model_name}::getList($param);
+            $data = Model_PayOrder::getList($param);
             $data['code'] = 20000;
             $data['message'] = '成功';
             return json($data);
@@ -72,13 +71,8 @@ class {$data.controller_name} extends Controller
     {
         try {
             $ids = Request::param('post.ids');
-{if $data.soft_delete}
-            //软删除
-            {$data.model_name}::deleteBatch($ids,true);
-{else/}
             //物理删除
-            {$data.model_name}::deleteBatch($ids);
-{/if}
+            Model_PayOrder::deleteBatch($ids);
             return json(['code' => 20000, "message" => "删除成功"]);
         }catch (\Exception $e){
             return json(['code'=>50000,'message'=>$e->getMessage()]);
