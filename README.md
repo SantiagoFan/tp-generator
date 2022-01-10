@@ -101,3 +101,4 @@ $g->buildVueList($info);
 $g->buildVueDetail($info);
 //...
 ```
+![ui 界面](http://baidu.com/pic/doge.png)
