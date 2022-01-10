@@ -39,9 +39,7 @@ class Index extends Controller
 
     public function create(){
         $data = input('post.');
-        $g =  new VueGenerator([
-            'mode'=>Generator::MODE_FORCE_COVER
-        ]);
+        $g =  new VueGenerator();
         $table_name = $data['table_name'];
         try{
             $info =  $g->getTableInfo($table_name,'common');

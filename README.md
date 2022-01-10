@@ -9,12 +9,11 @@ ThinkPHP Generator 代码生成器
  + Controller 生成
  + Model 生成
  + Vue 列表页生成
-
++ Vue 详情页生成
++ Vue 编辑页生成
 
 #### 待完成
 + validate 验证器生成
-+ Vue 详情页生成
-+ Vue 编辑页生成
 
 ## 安装
 
