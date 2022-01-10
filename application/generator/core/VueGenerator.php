@@ -74,7 +74,7 @@ class VueGenerator extends Generator
         // 写文件
         $file_path = $this->buildFilePath($data,
             'vue/'.$data['table_name'],
-            'detail',
+            'edit',
             ".vue");
         $content = $this->toPhpFile($content);
         file_put_contents($file_path,$content);

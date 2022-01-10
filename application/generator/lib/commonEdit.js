@@ -10,22 +10,20 @@ export default {
       }
     }
   },
-  mounted() {
-
-  },
   methods: {
     // 重置编辑样本
     resetDate() {
       this.formData = { }
       this.formData[this.primary_key] = undefined;
     },
-    fetchData(id) {
-      this.api.getDetail({id:id}).then(res => {
+    fetchData() {
+      // 获取数据前 请设置formData的主键数据
+      this.api.getDetail({[this.primary_key]:this.formData[this.primary_key]}).then(res => {
         this.formData = res.data
       })
     },
     // 提交添加
-    CreateData() {
+    createData() {
       this.$refs['dataForm'].validate((valid) => {
         if (valid) {
           this.api.saveData(this.formData).then(() => {
