@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <el-descriptions title="信息">
+        <el-descriptions title="信息" border>
 {volist name="data['columns']" id="item" key="i"}
             <el-descriptions-item label="{$item.field_desc}">{{formData['{$item.field}']}}</el-descriptions-item>
 {/volist}
